@@ -29,14 +29,4 @@ class Snake:
     def setPhone(self, phone):
         self.phone = phone
 
-#hiss = Snake()
-#hiss.setfName('tom')
-#hiss.setlName('slither')
-#hiss.setDOB('June someday 1900')
-#hiss.setAddress('University Ave.')
-#hiss.setPhone('(915)999-9999')
-#print(hiss.getfName())
-#print(hiss.getAddress())
-#print(hiss.getPhone())
-
-# MISSING TO ADD: PasswordNotFoundException <-- Or An "ERROR Handler" class?
+        
