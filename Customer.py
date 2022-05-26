@@ -11,12 +11,10 @@ class Customer(Snake):                                                          
         self.checkingAcc = checkingAcc
         self.savingsAcc = savingsAcc
         self.creditAcc = creditAcc
-        #self.checkStartBal = checkStartBal
-        #self.savStartBal = savStartBal
-        #self.credStartBal = credStartBal
         self.pw = pw
         self.email = email
-        self.logger = LogStatements()
+        #self.logger = LogStatements()
+        self.transactionStatements = []
 
     def getEmail(self):
         return self.email
@@ -26,10 +24,11 @@ class Customer(Snake):                                                          
         return self.pw
     def setPassword(self, pw):
         self.pw = pw
-    #def getTransactions(self):
-    #    return self.trasactions
-    #def addTransaction(self, transAct):
-    #    self.trasactions.append(transAct)
+# Trasactions are intended to be added to everytime a customer performs an activity 
+    def getTransactions(self):
+        return self.trasactions
+    def addTransaction(self, transAct):
+        self.trasactions.append(transAct)
     def getID(self):
         return self.id
     def setID(self, ID):
@@ -46,12 +45,18 @@ class Customer(Snake):                                                          
         return self.creditAcc
     def setCreditAcc(self, creditAcc):
         self.creditAcc = creditAcc
+#   Here I'll create a new .txt file in which I'll fill with all the actions the customer has performed during their last session.
+    def genBankStatements(self):
+        t = self.getTransactions()
+        for i, line in enumerate(t):
+            print(i, line)
 
-#cust = Customer(80626162, Checking(123, 1245.67), Savings(980, 1122.12), Credit(565, 7878.34, 250), 'password', 'something@gmail.com', 'kevin', 'ace', 'June 03 1990', 'University Ave', '(915)999-9932')
-#print(cust.getAddress())
-#cust.addTransaction('hey')
-#cust.addTransaction('finally')
-#print(cust.getTransactions()[1])
+cust = Customer(80626162, Checking(123, 1245.67), Savings(980, 1122.12), Credit(565, 7878.34, 250), 'password', 'something@gmail.com', 'kevin', 'ace', 'June 03 1990', 'University Ave', '(915)999-9932')
+print(cust.getAddress())
+cust.addTransaction('hey')
+cust.addTransaction('finally')
+print(cust.getTransactions()[1])
+cust.genBankStatements()
 ###########################################################################################
 #                           Test cases for CHECKING
 #           print('accBal:', cust.getCheckingAcc().inquireBal(), 'accNum:', cust.getCheckingAcc().get_accNum())
