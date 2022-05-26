@@ -4,13 +4,14 @@ from Customer import Customer
 from Checking import Checking
 from Savings import Savings
 from Credit import Credit
-# Here in the RunBank file we're instantiating all the objects
+# Here in the RunBank file we're instantiating all the needed objects & parsing through the csv file which contains 
+# the "customers" along with their personal & customer information
 def main():
     customers = {}
     try:
         with open("clientInfoFile.csv", newline='') as f:
             reader = csv.reader(f)
-            header = next(reader) # first line is header too
+            header = next(reader) # first line
             for row in reader:
                 fn = row[0]
                 ln = row[1]
