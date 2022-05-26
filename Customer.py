@@ -16,7 +16,7 @@ class Customer(Snake):                                                          
         #self.credStartBal = credStartBal
         self.pw = pw
         self.email = email
-        #self.logger = LogStatements()
+        self.logger = LogStatements()
 
     def getEmail(self):
         return self.email
@@ -26,12 +26,10 @@ class Customer(Snake):                                                          
         return self.pw
     def setPassword(self, pw):
         self.pw = pw
-
     #def getTransactions(self):
     #    return self.trasactions
     #def addTransaction(self, transAct):
     #    self.trasactions.append(transAct)
-    
     def getID(self):
         return self.id
     def setID(self, ID):
@@ -49,17 +47,17 @@ class Customer(Snake):                                                          
     def setCreditAcc(self, creditAcc):
         self.creditAcc = creditAcc
 
-    #cust = Customer(80626162, Checking(123, 1245.67), Savings(980, 1122.12), Credit(565, 7878.34, 250, 180), 'password', 'something@gmail.com', 'kevin', 'ace', 'June 03 1990', 'University Ave', '(915)999-9932')
+#cust = Customer(80626162, Checking(123, 1245.67), Savings(980, 1122.12), Credit(565, 7878.34, 250), 'password', 'something@gmail.com', 'kevin', 'ace', 'June 03 1990', 'University Ave', '(915)999-9932')
 #print(cust.getAddress())
 #cust.addTransaction('hey')
 #cust.addTransaction('finally')
 #print(cust.getTransactions()[1])
 ###########################################################################################
 #                           Test cases for CHECKING
-    #print('accBal:', cust.checkingAcc.get_accBal(), 'accNum:', cust.checkingAcc.get_accNum())
-    #cust.checkingAcc.set_accBal(2000.01)
-    #cust.checkingAcc.set_accNum(4567)
-    #print('accBal:', cust.checkingAcc.get_accBal(), 'accNum:', cust.checkingAcc.get_accNum())
+#           print('accBal:', cust.getCheckingAcc().inquireBal(), 'accNum:', cust.getCheckingAcc().get_accNum())
+#           cust.checkingAcc.set_accBal(2000.01)
+#           cust.checkingAcc.set_accNum(4567)
+#           print('accBal:', cust.getCheckingAcc().inquireBal(), 'accNum:', cust.getCheckingAcc().get_accNum())
 ######################################################################################## 
 #                           Test cases for SAVINGS
     #print('accBal:', cust.savingsAcc.get_accBal(), 'accNum:', cust.savingsAcc.get_accNum())
