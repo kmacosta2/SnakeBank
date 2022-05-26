@@ -1,7 +1,7 @@
 from Account import Account
 
 class Credit(Account):
-    def __init__(self, credAccNum=0, creditBal=0.0, credMax = 0): #, creditScore, creditMax):
+    def __init__(self, credAccNum=0, creditBal=0.0, credMax = 0):
         super().__init__(credAccNum, creditBal)
         self.creditMax = credMax          # unique to credit: creditMax
     
