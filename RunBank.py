@@ -9,7 +9,7 @@ from Credit import Credit
 def main():
     customers = {}
     try:
-        with open("clientInfoFile.csv", newline='') as f:
+        with open("/Users/kevinacosta/VisualStudioProjects/clientInfoFile.csv", newline='') as f:
             reader = csv.reader(f)
             header = next(reader) # first line
             for row in reader:
