@@ -9,7 +9,7 @@ from Credit import Credit
 def main():
     customers = {}
     try:
-        with open("/Users/kevinacosta/VisualStudioProjects/clientInfoFile.csv", newline='') as f:
+        with open("clientInfoFile.csv", newline='') as f:
             reader = csv.reader(f)
             header = next(reader) # first line
             for row in reader:
@@ -35,7 +35,7 @@ def main():
         print('File wasn\'t found, please fix this before re-running \'SnakeBank\', thank you')
     else:
         MenuLogic.mainMenu(customers)
-        print('Made it through...')
+        #print('Made it through...')
 
 if __name__ == '__main__':
     main()
