@@ -26,9 +26,9 @@ class Customer(Snake):                                                          
         self.pw = pw
 # Trasactions are intended to be added to everytime a customer performs an activity 
     def getTransactions(self):
-        return self.trasactions
+        return self.transactionStatements
     def addTransaction(self, transAct):
-        self.trasactions.append(transAct)
+        self.transactionStatements.append(transAct)
     def getID(self):
         return self.id
     def setID(self, ID):
@@ -52,10 +52,10 @@ class Customer(Snake):                                                          
             print(i, line)
 
 cust = Customer(80626162, Checking(123, 1245.67), Savings(980, 1122.12), Credit(565, 7878.34, 250), 'password', 'something@gmail.com', 'kevin', 'ace', 'June 03 1990', 'University Ave', '(915)999-9932')
-print(cust.getAddress())
+#print(cust.getAddress())
 cust.addTransaction('hey')
 cust.addTransaction('finally')
-print(cust.getTransactions()[1])
+#print(cust.getTransactions()[1])
 cust.genBankStatements()
 ###########################################################################################
 #                           Test cases for CHECKING
