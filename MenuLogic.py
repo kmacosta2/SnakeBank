@@ -1,7 +1,5 @@
 import time
-#
 # This is purely menu logic, this is never instantiated so, "review OOP in python" in order to use decorators
-#                                                         here or something similar to that.
 class MenuLogic:
     def mainMenu(customers):
         quit = False
@@ -11,12 +9,14 @@ class MenuLogic:
             if response == '0':
                 result = input("\tHello, are you a returning customer? (y, n, or q(quit)) ")
                 if result.lower() == 'y':
-                    name = input("\tFirst and last name (space separated): ")
-                    name = name.lower()
-                    try:    
+                    #name = input("\tFirst and last name (space separated): ")
+                    #name = name.lower()
+                    name = 'pinocchio disney'
+                    try:
                         if customers[name]:
                             #print('congrats, you exist')
-                            pw = input("\tpassword: ")
+                            #pw = input("\tpassword: ")
+                            pw = 'Disney*Pinocchio!987'
                             if customers[name].getPassword() == pw:
                                 MenuLogic.customerMenu(customers, name)
                                 break
@@ -28,14 +28,78 @@ class MenuLogic:
                         time.sleep(1)
                 elif result == 'n':
                     print('Alright in order to create an account please provide first & last name, password to get started\n\t\tat the moment we aren\'t accepting any new applicants, sorry')
-
             elif response == '1':
                 MenuLogic.managerMenu(customers)
                 break
 
+# This function contains the welcome screen as well as the "Deposit", "Inquire", & "Withdraw" basic services.
     def customerMenu(customers, name):
-        print('\tWelcome back', customers[name].getfName(), customers[name].getlName())
+        print('\n\tWelcome back', customers[name].getfName(), customers[name].getlName())
+        custom = customers[name]
+        service = ''
+        #accType = input("\tPlease specify the account type:\nChecking(0)\nSaving(1)\nChecking(2)")
+        while service != '0':
+            service = input("\tInquire Balance: 1\n\tDeposit: 2\n\tWithdraw: 3\n\tPay Someone: 4\n\tTransfer: 5\n\tQuit: 0\n\t")
+            if service != '0':
+                if service == '1': # Customers can only "inquire" about Credit
+                    accType = input("\tAccount Type: Checking: 0\tSaving: 1\tCredit: 2\n\t")
+                else:
+                    accType = input("\tAccount Type: Checking: 0\tSaving: 1\n\t")
+            if service == '1':  # Inquire
+                if accType == '0':
+                    print('\n\tChecking Balance:', custom.getCheckingAcc().inquireBal())
+                elif accType == '1':
+                    print('\n\tSavings Balance:', custom.getSavingsAcc().inquireBal())
+                elif accType == '2':
+                    print('\n\tCredit Balance:', custom.getCreditAcc().inquireBal())
+            elif service == '2':  # Deposit
+                amount = input("\tDeposit amount: ")
+                if accType == '0':
+                    print('\n\tChecking deposit of', amount)
+                    custom.getCheckingAcc().deposit(amount)
+                elif accType == '1':
+                    print('\n\tSavings deposit of', amount)
+                    custom.getSavingsAcc().deposit(amount)
+                elif accType == '2':
+                    print('\n\tCredit deposit unavailable')
+                    #custom.getCreditAcc().deposit(amount)
+            elif service == '3':  # Withdraw
+                amount = input("\tWithdraw amount: ")
+                if accType == '0':
+                    print('\n\tChecking withdraw of', amount)
+                    custom.getCheckingAcc().withdraw(amount)
+                elif accType == '1':
+                    print('\n\tSavings withdraw of', amount)
+                    custom.getSavingsAcc().withdraw(amount)
+                elif accType == '2':
+                    print('\n\tCredit withdraw unavailable')
+                    #custom.getCreditAcc().withdraw(amount)
 
+            elif service == '4' or service == '5':  # Pay Someone And Transfer
+                MenuLogic.custAdvServices(customers, custom, accType, service)
+        else:
+            n = customers[name].getfName() + ' ' + customers[name].getlName()
+            print(f'Goodbye {n}\nThank you, come again!')
+
+    # The more complex services provided here so as to avoid too much cluttered code in one method
+    # Delivers "Pay Someone" & "Transfer from another account type"
+    def custAdvServices(customers, customer, accType, service):
+        if service == '4': # Pay Someone
+            who = input("To who would you like to send the payment to?")
+            whichAcc = input("To which of their accounts?(Checking: 0 Savings: 1)\n")
+            amount = input("How much would you like to pay them?\n")
+            if accType == '0':
+                print('\n\tChecking Balance:', customer.getCheckingAcc().pay(who, whichAcc, amount, customers))
+            if accType == '1':
+                print('\n\tSavings Balance:', customer.getSavingsAcc().pay(who, whichAcc, amount, customers))
+        
+        elif service == '5': # Transfer
+            toAcc = input("To what other account? ")
+            amount = input("How much would you like to transfer? ")
+            if accType == '0':
+                print('\n\tChecking Balance:', customer.getCheckingAcc().transfer(customer, toAcc, amount))
+            if accType == '1':
+                print('\n\tChecking Balance:', customer.getSavingsAcc().transfer(customer, toAcc, amount))
     def managerMenu(customers):
-        print('\tmanager menu')
+        print('\tManager menu')
         time.sleep(1)
