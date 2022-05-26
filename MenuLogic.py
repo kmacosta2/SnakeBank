@@ -37,9 +37,8 @@ class MenuLogic:
         print('\n\tWelcome back', customers[name].getfName(), customers[name].getlName())
         custom = customers[name]
         service = ''
-        #accType = input("\tPlease specify the account type:\nChecking(0)\nSaving(1)\nChecking(2)")
         while service != '0':
-            service = input("\tInquire Balance: 1\n\tDeposit: 2\n\tWithdraw: 3\n\tPay Someone: 4\n\tTransfer: 5\n\tQuit: 0\n\t")
+            service = input("\tInquire Balance: 1\n\tDeposit: 2\n\tWithdraw: 3\n\tPay Someone: 4\n\tTransfer: 5\n\tGenerate Statement: 6\n\tQuit: 0\n\t")
             if service != '0':
                 if service == '1': # Customers can only "inquire" about Credit
                     accType = input("\tAccount Type: Checking: 0\tSaving: 1\tCredit: 2\n\t")
@@ -48,35 +47,44 @@ class MenuLogic:
             if service == '1':  # Inquire
                 if accType == '0':
                     print('\n\tChecking Balance:', custom.getCheckingAcc().inquireBal())
+                    custom.addTransaction(0, whichAcc=0)             
                 elif accType == '1':
                     print('\n\tSavings Balance:', custom.getSavingsAcc().inquireBal())
+                    custom.addTransaction(0, whichAcc=1)
                 elif accType == '2':
                     print('\n\tCredit Balance:', custom.getCreditAcc().inquireBal())
+                    custom.addTransaction(0, whichAcc=2)
+
             elif service == '2':  # Deposit
                 amount = input("\tDeposit amount: ")
                 if accType == '0':
                     print('\n\tChecking deposit of', amount)
                     custom.getCheckingAcc().deposit(amount)
+                    custom.addTransaction(1, whichAcc=0, amount=amount)
                 elif accType == '1':
                     print('\n\tSavings deposit of', amount)
                     custom.getSavingsAcc().deposit(amount)
+                    custom.addTransaction(1, whichAcc=1, amount=amount)
                 elif accType == '2':
                     print('\n\tCredit deposit unavailable')
-                    #custom.getCreditAcc().deposit(amount)
+
             elif service == '3':  # Withdraw
                 amount = input("\tWithdraw amount: ")
                 if accType == '0':
                     print('\n\tChecking withdraw of', amount)
                     custom.getCheckingAcc().withdraw(amount)
+                    custom.addTransaction(2, whichAcc=0, amount=amount)
                 elif accType == '1':
                     print('\n\tSavings withdraw of', amount)
                     custom.getSavingsAcc().withdraw(amount)
+                    custom.addTransaction(2, whichAcc=1, amount=amount)
                 elif accType == '2':
                     print('\n\tCredit withdraw unavailable')
-                    #custom.getCreditAcc().withdraw(amount)
 
             elif service == '4' or service == '5':  # Pay Someone And Transfer
                 MenuLogic.custAdvServices(customers, custom, accType, service)
+            elif service == '6':
+                custom.genBankStatements()
         else:
             n = customers[name].getfName() + ' ' + customers[name].getlName()
             print(f'Goodbye {n}\nThank you, come again!')
@@ -90,16 +98,21 @@ class MenuLogic:
             amount = input("How much would you like to pay them?\n")
             if accType == '0':
                 print('\n\tChecking Balance:', customer.getCheckingAcc().pay(who, whichAcc, amount, customers))
+                customer.addTransaction(3, whichAcc=0, amount=amount, who=who, otherAcc=whichAcc)
             if accType == '1':
                 print('\n\tSavings Balance:', customer.getSavingsAcc().pay(who, whichAcc, amount, customers))
-        
+                customer.addTransaction(3, whichAcc=1, amount=amount, who=who, otherAcc=whichAcc)
+
         elif service == '5': # Transfer
             toAcc = input("To what other account? ")
             amount = input("How much would you like to transfer? ")
             if accType == '0':
                 print('\n\tChecking Balance:', customer.getCheckingAcc().transfer(customer, toAcc, amount))
+                customer.addTransaction(4, whichAcc=0, amount=amount, otherAcc=toAcc)
             if accType == '1':
                 print('\n\tChecking Balance:', customer.getSavingsAcc().transfer(customer, toAcc, amount))
+                customer.addTransaction(4, whichAcc=1, amount=amount, otherAcc=toAcc)
+
     def managerMenu(customers):
         print('\tManager menu')
         time.sleep(1)
